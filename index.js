@@ -14,12 +14,7 @@ const wsModule = new WebSocketModule(server);
 wsModule.handle([
     {
         name: 'get-user-chats',
-        handler: async (arg) => {
-            const user = require('./modules/api/user');
-            const {data} = await user.getInfo(arg.user_id);
-            const chats = data.item.chats;
-            wsModule.socket.emit('get-user-chats', chats);
-        },
+        handler: { controller: require('./web-socket/chat'), method: 'getUserChats' },
     },
 ]);
 

@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 
-class WebSocket {
+class WebSocketModule {
 
     /**
      * @type Server<IncomingMessage, ServerResponse>
@@ -34,10 +34,11 @@ class WebSocket {
         this.socket.on('connection', (socket) => {
             // handle web-socket events
             arrayEvents.forEach(data => {
-                socket.on(data.name, data.handler);
+                const controller = (new data.handler.controller()).bindSocket(this.socket);
+                socket.on(data.name, controller[data.handler.method]);
             });
         });
     }
 }
 
-module.exports = WebSocket;
+module.exports = WebSocketModule;
