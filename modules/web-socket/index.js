@@ -3,27 +3,22 @@ const { Server } = require("socket.io");
 class WebSocketModule {
 
     /**
-     * @type Server<IncomingMessage, ServerResponse>
-     */
-    http = null
-
-    /**
      * @type Server<ListenEvents,EmitEvents,ServerSideEvents,SocketData>
      */
     socket = null;
 
-    constructor(http) {
-        this.http = http;
+    constructor(port) {
+        this.port = port;
         this.init();
     }
 
     init () {
-        this.socket = new Server(this.http, {
+        this.socket = new Server({
             cors: {
                 origin: process.env.NODE_ORIGIN_URL,
                 methods: ["GET", "POST"],
             }
-        });
+        }).listen(this.port);
     }
 
     /**

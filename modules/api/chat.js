@@ -13,6 +13,13 @@ class Chat extends ApiEntity{
             data: { user_id, content },
         });
     }
+
+    getChat(id) {
+        return request.get({
+            entity: this.entity,
+            uri: `/${id}`
+        });
+    }
 }
 
 module.exports = new Chat();

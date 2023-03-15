@@ -1,24 +1,23 @@
 const express = require('express')
 require('dotenv').config();
-const http = require('http');
 const app = express()
 const port = 3000
 
-// init server
-const server = http.createServer(app);
-
 // init web-sockets
 const WebSocketModule = require('./modules/web-socket');
-const wsModule = new WebSocketModule(server);
+const wsModule = new WebSocketModule(port);
 
 wsModule.handle([
     {
         name: 'get-user-chats',
         handler: { controller: require('./web-socket/chat'), method: 'getUserChats' },
     },
+    {
+        name: 'get-chat',
+        handler: { controller: require('./web-socket/chat'), method: 'getChat' },
+    },
+    {
+        name: 'send-message',
+        handler: { controller: require('./web-socket/chat'), method: 'sendMessage' },
+    },
 ]);
-
-// start server
-server.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "draft": "nodemon web-socket-draft.js"
   },
   "author": "Winter666",
   "license": "ISC",
