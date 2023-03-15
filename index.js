@@ -1,4 +1,5 @@
 const express = require('express')
+require('dotenv').config();
 const http = require('http');
 const app = express()
 const port = 3000
@@ -7,18 +8,20 @@ const port = 3000
 const server = http.createServer(app);
 
 // init web-sockets
-const { Server } = require("socket.io");
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:8081",
-        methods: ["GET", "POST"],
-    }
-});
+const WebSocketModule = require('./modules/web-socket');
+const wsModule = new WebSocketModule(server);
 
-// handle web-socket events
-io.on('connection', (socket) => {
-    console.log('a user connected');
-});
+wsModule.handle([
+    {
+        name: 'get-user-chats',
+        handler: async (arg) => {
+            const user = require('./modules/api/user');
+            const {data} = await user.getInfo(arg.user_id);
+            const chats = data.item.chats;
+            wsModule.socket.emit('get-user-chats', chats);
+        },
+    },
+]);
 
 // start server
 server.listen(port, () => {
