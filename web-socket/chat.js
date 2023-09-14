@@ -7,7 +7,6 @@ class ChatController extends Controller {
         const {data} = await userReq.getInfo(arg.user_id);
         const chats = data.item.chats;
         this.emit('get-user-chats', chats);
-        this.broadcast.emit('get-user-chats', chats)
     }
 
     async getChat(arg) {
