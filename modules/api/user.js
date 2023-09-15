@@ -7,10 +7,11 @@ class User extends ApiEntity {
         super('user');
     }
 
-    getInfo(user_id) {
+    getInfo(user_id, token) {
         return request.get({
             entity: this.entity,
-            uri: `/${user_id}`
+            uri: `/${user_id}`,
+            token,
         });
     }
 }

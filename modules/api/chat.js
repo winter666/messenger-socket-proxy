@@ -6,18 +6,20 @@ class Chat extends ApiEntity{
         super('chat');
     }
 
-    sendMessage(content, chat_id, user_id) {
+    sendMessage(content, chat_id, user_id, token) {
         return request.post({
             entity: this.entity,
             uri: `/${chat_id}/message/push`,
             data: { user_id, content },
+            token,
         });
     }
 
-    getChat(id) {
+    getChat(id, token) {
         return request.get({
             entity: this.entity,
-            uri: `/${id}`
+            uri: `/${id}`,
+            token,
         });
     }
 }
