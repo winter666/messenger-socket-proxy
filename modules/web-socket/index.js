@@ -22,7 +22,7 @@ class WebSocketModule {
                 credentials: false,
                 withCredentials: false,
             },
-        }).listen(3000, function (io) {
+        }).listen(this.port, function (io) {
         });
     }
 
